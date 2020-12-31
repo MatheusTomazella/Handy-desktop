@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title></title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <!-- Favicon -->     
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/icon/favicon-32x32.png">
+        <!-- Materialize CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Materialize Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="">
+        
+        <section class="admin-info">
+            <div class="admin-info">
+                <div class="keys">
+                    <label> Id:     </label>
+                    <label> Name:   </label>
+                    <label> Email:  </label>
+                    <label> Level:  </label>
+                </div>
+                <div class="values">
+                    <label id="admin-info-id">          undefined </label>
+                    <label id="admin-info-name">        undefined </label>
+                    <label id="admin-info-email">       undefined </label>
+                    <label id="admin-info-accessLevel"> undefined </label>
+                </div>
+            </div>
+            <div class="admin-buttons">
+                <button> Sair </button>
+            </div>
+        </section>
+
+        <section class="content">
+            <section class="users-waiting">
+                <h1 class="users-waiting"> Fila do Suporte </h1>
+                <ul class="users-waiting" id="waiting">
+                    <!-- Users Waiting For Support -->
+                </ul>
+                <div id="user-queue-menu">
+                    <div class="dont-close-pls" onclick="queueMenu.connect()"> Conectar </div>
+                    <div class="dont-close-pls"> Ver Usuário </div>
+                </div>
+            </section>
+            <section class="functions">
+                <div class="function">
+                    <i class="material-icons">account_circle</i>    Gerenciar Usuários
+                </div>
+                <div class="function">
+                    <i class="material-icons">person_add</i>        Cadastrar Usuário
+                </div>
+                <div class="function">
+                    <i class="material-icons">assignment_ind</i>    Gerenciar Admins
+                </div>
+                <div class="function">
+                    <i class="material-icons">add</i>               Cadastrar Admin
+                </div>
+                <div class="function">
+                    <i class="material-icons">settings</i>          Componentes
+                </div>
+                <div class="function">
+                    <i class="material-icons">add_circle</i>        Cadastrar Componente
+                </div>
+                <div class="function">
+                    <i class="material-icons">local_offer</i>       Fornecedores
+                </div>
+                <div class="function">
+                    <i class="material-icons">add_shopping_cart</i> Cadastrar Fornecedor
+                </div>
+            </section>
+        </section>
+
+        <script>
+            if (typeof module === 'object') {window.module = module; module = undefined;}
+        </script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
+        <!-- Socket.io -->     
+        <script src="./libraries/socket.io/socket.io.js"></script>
+        <!-- Materialize Js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Materialize Initialize -->
+        <script>    
+        
+        </script>
+        <script src="./js/UserQueueMenu.js">    </script>
+        <script src="./js/Admin.js">            </script>
+        <script src="./js/RealTime.js">         </script>
+        <script src="./js/require.js">          </script>
+        <script src="./js/UI.js">               </script>
+        <script> 
+            let realTime;
+            $(document).ready( ( ) => {
+                admin.fetch    ( );
+                admin.get_token( );
+                const waitingAdmin = setInterval( ( ) => {
+                    if ( admin.admin != undefined ) {
+                        realTime = new RealTime( admin.admin );
+                        realTime.start( APIurl, 'admin' );
+                        clearInterval( waitingAdmin );
+                    }
+                }, 500 )
+            } )
+            const supportQueueList = document.getElementById( 'waiting' );
+        </script>
+
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

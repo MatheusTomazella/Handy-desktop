@@ -1,0 +1,38 @@
+{
+    "defaultConfig": {
+        "width": 1200,
+        "height": 600,
+        "backgroundColor": "#FFFFFF",
+        "title": "Handy",
+        "tittleBarStyle": "hidden",
+        "darkTheme": false,
+        "webPreferences": {
+            "contextIsolation": false,
+            "nodeIntegration": true
+        }
+    },
+    "login": {
+        "width": 600,
+        "height": 600,
+        "backgroundColor": "#FFFFFF",
+        "title": "Handy",
+        "tittleBarStyle": "hidden",
+        "darkTheme": false,
+        "webPreferences": {
+            "contextIsolation": false,
+            "nodeIntegration": true
+        }
+    },
+    "chat": {
+        "width": 600,
+        "height": 600,
+        "backgroundColor": "#FFFFFF",
+        "title": "Handy",
+        "tittleBarStyle": "hidden",
+        "darkTheme": false,
+        "webPreferences": {
+            "contextIsolation": false,
+            "nodeIntegration": true
+        }
+    }
+}

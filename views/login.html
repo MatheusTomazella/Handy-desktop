@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title></title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <link rel="stylesheet" type="text/css" href="./css/login.css">
+        <!-- Favicon -->     
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/icon/favicon-32x32.png">
+        <!-- Materialize CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Materialize Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="">
+        
+        <section class="login">
+            <img src="./../img/icon/android-chrome-192x192.png">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input required value="matheus250504@gmail.com" id="pinus-email" type="email" class="input-field" placeholder="Digite seu email">
+                </div>
+                <div class="form-group">
+                    <input required value="teste" id="pinus-password" type="password" class="input-field" placeholder="Digite sua senha">
+                </div>
+                <button class="btn waves-effect peach" onclick="loginTrigger()">Entrar</button>
+            </div>
+        </section>
+
+        <script>
+            if (typeof module === 'object') {window.module = module; module = undefined;}
+        </script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>        
+        <!-- Materialize Js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Materialize Initialize -->
+        <script>    
+        
+        </script>
+        <script src="./js/Admin.js">            </script>
+        <script src="./js/require.js">          </script>
+        <script src="./js/login.js">            </script>
+
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

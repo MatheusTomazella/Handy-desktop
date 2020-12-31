@@ -1,0 +1,25 @@
+{
+  "name": "handy-desktop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^11.1.1",
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatheusTomazella/Handy-desktop.git"
+  },
+  "author": "Matheus Tomazella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatheusTomazella/Handy-desktop/issues"
+  },
+  "homepage": "https://github.com/MatheusTomazella/Handy-desktop#readme"
+}
