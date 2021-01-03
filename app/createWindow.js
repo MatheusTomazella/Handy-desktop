@@ -1,15 +1,15 @@
-const { BrowserWindow, globalShortcut } = require( 'electron' );
+const { BrowserWindow, ipcMain } = require( 'electron' );
 const WINDOWconfig = require( '../config/WINDOW.json' );
 
-module.exports = ( view = 'index', config = WINDOWconfig.defaultConfig ) => {
+module.exports = ( view = 'index', config = WINDOWconfig.defaultConfig, windowArguments ) => {
         const window = new BrowserWindow( config );
         window.setMenu( null );
-        window.loadFile( `./views/${ view }.html` ); // Cosidera o diretório do arquivo que chama a função (app.js), não onde ela é definida (electron.js)
+        window.loadFile( `./views/${ view }.html` );
         
-        window.webContents.openDevTools();
-        if ( globalShortcut.isRegistered( 'f5' ) ) globalShortcut.unregister( 'f5' )
-        globalShortcut.register( 'f5', ( ) => {
-            window.reload( );
+        //window.webContents.openDevTools();
+
+        window.once( 'ready-to-show', ( event ) => {
+            window.webContents.send( 'windowArguments', windowArguments )
         } )
 
         return window;

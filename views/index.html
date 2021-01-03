@@ -51,29 +51,32 @@
                 </div>
             </section>
             <section class="functions">
-                <div class="function">
+                <div class="function" onclick="openManager( 'user', 'user', 'Usuários' )">
                     <i class="material-icons">account_circle</i>    Gerenciar Usuários
                 </div>
-                <div class="function">
+                <div class="function" onclick="openRegister( 'user', 'Usuário' )">
                     <i class="material-icons">person_add</i>        Cadastrar Usuário
                 </div>
-                <div class="function">
+                <div class="function" onclick="openManager( 'admin', 'admin', 'Administradores' )">
                     <i class="material-icons">assignment_ind</i>    Gerenciar Admins
                 </div>
-                <div class="function">
+                <div class="function" onclick="openRegister( 'admin', 'Administrador' )">
                     <i class="material-icons">add</i>               Cadastrar Admin
                 </div>
-                <div class="function">
+                <div class="function" onclick="openManager( 'component', 'comp', 'Componentes' )">
                     <i class="material-icons">settings</i>          Componentes
                 </div>
-                <div class="function">
+                <div class="function" onclick="openRegister( 'component', 'Componente' )">
                     <i class="material-icons">add_circle</i>        Cadastrar Componente
                 </div>
-                <div class="function">
+                <div class="function" onclick="openManager( 'provider', 'comp/prov', 'Fornecedores' )">
                     <i class="material-icons">local_offer</i>       Fornecedores
                 </div>
-                <div class="function">
+                <div class="function" onclick="openRegister( 'provider', 'Fornecedor' )">
                     <i class="material-icons">add_shopping_cart</i> Cadastrar Fornecedor
+                </div>
+                <div class="function" onclick="openManager( 'message', 'msg', 'Mensagens' )">
+                    <i class="material-icons">message</i>           Mensagens
                 </div>
             </section>
         </section>
@@ -98,7 +101,7 @@
         <script src="./js/require.js">          </script>
         <script src="./js/UI.js">               </script>
         <script> 
-            let realTime;
+            const queueMenu = new UserQueueMenu( 'user-queue-menu', [ 'queue-user' ] );
             $(document).ready( ( ) => {
                 admin.fetch    ( );
                 admin.get_token( );

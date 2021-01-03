@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Handy | Chat</title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="./css/chat.css">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/500b73534a.js" crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="container col-12 m-0 p-0 ubuntu-font">
+
+        <div class="container p-0">
+            <div class="col-lg-8 col-12 m-auto chat-container">
+                <div class="panel">
+                    <!--Heading-->
+                    <div class="panel-heading">
+                        <div class="panel-control">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-gear"></i></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a id="demo-disconnect-chat" href="#" data-target="#demo-chat-body">Desconectar</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h3 class="panel-title">Suporte</h3>
+                    </div>
+            
+                    <!--Widget body-->
+                    <div id="demo-chat-body" class="">
+                        <div class="nano has-scrollbar">
+                            <div id="scrollDiv" class="nano-content pad-all" tabindex="0" style="right: -17px;">
+                                <ul id="chat-messages" class="list-unstyled media-block">
+                                    
+                                    <!-- Messages -->
+
+                                </ul>
+                            </div>
+                        <div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div></div>
+            
+                        <!--Widget footer-->
+                        <div class="panel-footer">
+                            <div class="row col-12">
+                                <div class="col-xs-9 col-9 px-0">
+                                    <input id="input" type="text" placeholder="Digite sua mensagem." class="form-control chat-input">
+                                </div>
+                                <div class="col-xs-3 col-3 px-0">
+                                    <button class="btn btn-primary btn-block chat-btn b-0" onclick="chatHandler.post()">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            if (typeof module === 'object') {window.module = module; module = undefined;}
+        </script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Popper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <!-- Bootstrap Js --> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- Socket.IO -->
+        <script src="./libraries/socket.io/socket.io.js"></script>
+
+        <!-- ChatScript -->
+        <script src="./js/RealTime.js">       </script>
+        <script src="./js/Mens.js">           </script>
+        <script src="./js/Admin.js">          </script>
+        <script src="./js/require.js">        </script>
+        <script src="./js/Chat.js">           </script>
+        <script src="./js/chatComp.js">       </script>
+        <script>
+            $(document).ready( ( ) => {
+                admin.fetch    ( );
+                admin.get_token( );
+                const waitingAdmin = setInterval( ( ) => {
+                    if ( admin.admin != undefined ) {
+                        realTime = new RealTime( admin.admin );
+                        realTime.start( APIurl, 'admin' );
+                        chatHandler.getUserInfo( );
+                        clearInterval( waitingAdmin );
+                    }
+                }, 500 )
+            } )
+        </script>
+
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

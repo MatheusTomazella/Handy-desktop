@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title></title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <link rel="stylesheet" type="text/css" href="./css/manage.css">
+        <!-- Favicon -->     
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/icon/favicon-32x32.png">
+        <!-- Materialize CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Materialize Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="">
+
+        <section class="content">
+            <section class="users-waiting query-list">
+                <h1 class="users-waiting query-list" id="query-title"> Gerenciar undefined </h1>
+                <ul class="users-waiting" id="query">   
+                    <!-- Query Results -->
+                </ul>
+                <div id="user-queue-menu">
+                    <div class="dont-close-pls" onclick=""> Editar  </div>
+                    <div class="dont-close-pls" onclick=""> Deletar </div>
+                </div>
+            </section>
+        </section>
+
+        <script>
+            if (typeof module === 'object') {window.module = module; module = undefined;}
+        </script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
+        <!-- Socket.io -->     
+        <script src="./libraries/socket.io/socket.io.js"></script>
+        <!-- Materialize Js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Materialize Initialize -->
+        <script>    
+        
+        </script>
+        <script src="./js/UserQueueMenu.js">    </script>
+        <script src="./js/Admin.js">            </script>
+        <script src="./js/require.js">          </script>
+        <script src="./js/ManagerWindow.js">    </script>
+        <script> 
+            const contextMenu = new UserQueueMenu( 'user-queue-menu', [ 'query-item' ] );
+            let managerWindow;
+            $(document).ready( ( ) => {
+                admin.fetch    ( );
+                admin.get_token( );
+                ipcRenderer.once( 'windowArguments', ( event, args ) => {
+                    managerWindow = new ManagerWindow( args );
+                } );
+            } )
+        </script>
+
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

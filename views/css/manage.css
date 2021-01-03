@@ -1,0 +1,16 @@
+section.query-list {
+    width: 100%;
+}
+
+h1.query-list {
+    margin-top: 0;
+}
+
+div.query-list-title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.row {
+    margin: 0 !important;
+}

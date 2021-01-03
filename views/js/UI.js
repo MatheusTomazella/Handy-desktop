@@ -1,7 +1,7 @@
-const queueMenu = new UserQueueMenu( 'user-queue-menu' );
+function openRegister ( type, title ) {
+    ipcRenderer.send( 'newRegister', { type, title } );
+}
 
-$( document ).ready( ( ) => {
-    $( 'body' ).on( 'mousedown', ( event ) => {
-        if ( event.target.className != 'queue-user' && event.target.className != 'dont-close-pls' ) queueMenu.hide();
-    } )
-} )
+function openManager ( type, route, title ) {
+    ipcRenderer.send( 'newManager', { type, title, route } );
+}

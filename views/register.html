@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title></title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <!-- Favicon -->     
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/icon/favicon-32x32.png">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Materialize Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="">
+        
+        <style>
+            .form-control {
+                margin-bottom: 1rem;
+            }
+        </style>
+
+        <div class="modal-content col-lg-6 col-12 m-0">
+            <div class="modal-header">
+                <h4 class="modal-title" id="register-title">Undefined</h4>
+            </div>
+            <div class="modal-body">
+                <form id="register">
+                    <!-- User -->
+                    <input required id="name"                       type="text"     class="form-control" placeholder="Nome">
+                    <input required id="email"                      type="email"    class="form-control" placeholder="Email">
+                    <input required id="password"                   type="password" class="form-control" placeholder="Senha">
+                    <input required id="password-conf"              type="password" class="form-control" placeholder="Confirmar Senha">
+
+                    <!-- Admin -->
+                    <input required id="access"                     type="number"   class="form-control" placeholder="Nível de Acesso">
+
+                    <!-- Component -->
+                    <textarea required id="description"             type="password" class="form-control" placeholder="Descrição"></textarea>
+
+                    <!-- Provider -->
+                    <select id="component" class="form-control">    </select>
+                    <input required id="link"                       type="text"     class="form-control" placeholder="Link">
+                    <input required id="cost"                       type="number"   class="form-control" placeholder="Custo">
+
+                    <button id="btn-register" class="btn btn-block btn-info peach" type="button" onclick="registerWindow.registerDefault()">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            if (typeof module === 'object') {window.module = module; module = undefined;}
+        </script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
+        <!-- Popper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <!-- Bootstrap Js --> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="./js/RegisterWindow.js">   </script>
+        <script src="./js/Admin.js">            </script>
+        <script src="./js/require.js">          </script>
+        <script> 
+            let registerWindow;
+            $(document).ready( ( ) => {
+                admin.fetch    ( );
+                admin.get_token( );
+                ipcRenderer.once( 'windowArguments', ( event, args ) => {
+                    registerWindow = new RegisterWindow( args );
+                } )
+            } )
+        </script>
+
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

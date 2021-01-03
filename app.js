@@ -19,4 +19,22 @@ app.whenReady( )
     const loginWindow = createWindow( 'login', WINDOWconfig.login );
     loginWindow.setIcon( handyIcon_white );
     bridge.set_window( 'login', loginWindow );
+
+    electron.globalShortcut.register( 'f3', ( ) => {
+        Object.values( bridge.windows ).forEach( window => {
+            try { 
+                window.webContents.openDevTools( );
+            }
+            catch { }
+        } )
+    } )
+
+    electron.globalShortcut.register( 'f5', ( ) => {
+        Object.values( bridge.windows ).forEach( window => {
+            try { 
+                window.reload( );
+            }
+            catch { }
+        } )
+    } )
 } )

@@ -17,7 +17,7 @@ class RealTime {
         const socket    = await io( url );
         this.user.type  = userType;
 
-        socket.emit( 'setSocket', { type: this.user.type, id: this.user.id } );
+        socket.emit( 'setSocket', { type: this.user.type, id: this.user.id, name: this.user.name } );
 
         socket.on( 'message', ( message ) => {
             console.log( message )
@@ -25,15 +25,10 @@ class RealTime {
             newMessage.show();
         } )
         socket.on( 'messageLoad', ( messages ) => {
+            console.log( messages )
             messages.forEach( ( message ) => {
                 const newMessage = new Men( message );
-                let waitingTime = 0;
-                const nameIsReady = setInterval( ( ) => {
-                    if ( this.otherUserInfo.name != undefined || waitingTime >= 10 ) { 
-                        newMessage.show();
-                        clearInterval( nameIsReady );
-                    }
-                }, 1000 );
+                newMessage.show();
             } )
         } )
         socket.on( 'repportError', ( error ) => {
@@ -48,7 +43,12 @@ class RealTime {
                 console.log( request );
             } )
             socket.on( 'supportQueue', ( queue ) => {
-                console.log( queue );
+                try {
+                    supportQueueList;
+                }
+                catch {
+                    return;
+                }
                 supportQueueList.innerHTML = '';
                 queue.forEach( element => {
                     this.supportQueueObj[ element.userId ] = element;
@@ -59,7 +59,7 @@ class RealTime {
                     li.dataset.socket = element.socketId;
                     li.onmousedown = ( event ) => {
                         const position  = { top: event.clientY, left: event.clientX };
-                        const user      = { id: event.target.dataset.id, socket: event.target.dataset.socket };
+                        const user      = { id: event.target.dataset.id, socket: event.target.dataset.socket, name: element.name };
                         queueMenu.show( position, user );
                     }
                     supportQueueList.appendChild( li );
@@ -68,20 +68,8 @@ class RealTime {
         } else {
             socket.on( 'supportConnect', ( info ) => {
                 console.log( info )
-                if ( info.user.socketId == this.socket.id ) { 
-                    this.otherUserInfo = { socketId: info.support.socketId, userId: info.support.supportId };
-                    $.ajax({
-                        type: "GET",
-                        url: `${APIurl}/admin?id=${this.otherUserInfo.userId}&token=${user.token}`,
-                        success: function (response) {
-                            console.log(response[0])
-                            realTime.otherUserInfo.name = response[0].name;
-                        },
-                        error: ( error ) => {
-                            console.log( error );
-                        }
-                    });
-                }
+                if ( info.user.socketId == this.socket.id )
+                    this.otherUserInfo = { socketId: info.support.socketId, userId: info.support.supportId, name: info.support.name };
             } )
         }
 

@@ -8,7 +8,9 @@ class Bridge {
     admin;
     token;
     chatOpenningUser;
-    chatCount;
+    chatCount = 0;
+    registerCount = 0;
+    managerCount = 0;
 
     constructor ( ipc ) {
         this.ipc = ipc;
@@ -43,8 +45,22 @@ class Bridge {
             }, 500 );
         } )
         this.ipc.on( 'getChatInfo', ( event ) => {
-            this.ipc.reply( event, 'getChatInfo', this.chatOpenningUser );
+            this.reply( event, 'getChatInfo', this.chatOpenningUser );
             this.chatOpenningUser = undefined;
+        } )
+
+        this.ipc.on( 'newRegister', ( event, args ) => {
+            const window = createWindow( 'register', WINDOWconfig.login, args );
+            window.setIcon( handyIcon_white );
+            this.set_window( 'register'+this.registerCount, window );
+            this.registerCount++;
+        } )
+
+        this.ipc.on( 'newManager', ( event, args ) => {
+            const window = createWindow( 'manage', WINDOWconfig.defaultConfig, args );
+            window.setIcon( handyIcon_white );
+            this.set_window( 'manager'+this.managerCount, window );
+            this.managerCount++;
         } )
 
         return this;
