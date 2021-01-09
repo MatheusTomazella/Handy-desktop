@@ -53,6 +53,14 @@ button.peach:focus {
     background-color: var(--primary-color) !important;
 }
 
+button.flat-peach:hover {
+    background-color: var(--primary-shadow) !important;
+    transition-duration: 0.2s;
+}
+button.flat-peach:focus {
+    background-color: var(--primary-color) !important;
+}
+
 h1 {
     font-size: 2rem !important;
     margin: 1rem;

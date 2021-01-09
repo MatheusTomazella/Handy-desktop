@@ -37,7 +37,7 @@ class ManagerWindow {
             }, 
             error: ( error ) => {
                 console.log( error );
-                alert( error.error );
+                errorAlert( 'Falha na Busca', 'Ocorreu um erro na busca dos elementos requisitados' );
             }
         });
         this.query = { };
@@ -196,14 +196,13 @@ class ManagerWindow {
                         success: ( response ) => {
                             managerWindow.constructDefault();
                             managerWindow.requestQuery( this.type, this.route );
-                            //alert( "Registro deletado com sucesso" );
                         }, 
                         error: ( error ) => {
                             console.log( error );
-                            alert( "Erro" );
+                            erorAlert( 'Falha na Remoção', 'Ocorreu um erro ao tentar remover o registro' );
                         }
                     });
-                } else alert( "Senha incorreta" );
+                } else errorAlert( 'Falha na Remoção', 'Senha Incorreta' );
                 admin.passwordConfirmation = undefined;
                 clearInterval( waitingConfirmation );
             }

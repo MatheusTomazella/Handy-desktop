@@ -12,3 +12,20 @@ ipcRenderer.on( 'get_admin', ( event, adminInfo ) => {
 ipcRenderer.on( 'get_token', ( event, token ) => {
     admin.set_token( token );
 } );
+
+function errorAlert( title, message ) {
+    if ( MaterialDialog ) MaterialDialog.alert(
+        `${message}
+        <br><br>
+        <p style="font-size: 0.7rem">Para mais informações: F3`,
+        {
+            title,
+            buttons:{ 
+                close:{
+                    text:'Fechar',
+                    className:'btn-flat flat-peach',
+                }
+            }
+        }
+    );
+}

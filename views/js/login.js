@@ -6,5 +6,6 @@ function loginTrigger ( ) {
     } )
     .catch( ( error ) => {
         console.log(error)
+        errorAlert( 'Falha no Login', 'Erro de Autenticação' );
     } )
 }

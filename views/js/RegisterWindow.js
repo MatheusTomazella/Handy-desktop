@@ -81,6 +81,10 @@ class RegisterWindow {
                     if ( this.isEdit && option.value == this.element.idComp ) option.selected = true;
                     this.component.appendChild( option );
                 } )
+            },
+            error: ( error ) => {
+                console.log(error)
+                errorAlert( 'Falha ao carregar componentes', 'Não foi possível carregar os componentes para registro do fornecedor.' )
             }
         });
     }
@@ -174,7 +178,7 @@ class RegisterWindow {
             },
             error: ( error ) => {
                 console.log( error );
-                alert( 'Erro' );
+                errorAlert( 'Falha ao cadastrar elemento', 'Não foi possível registrar o elemento.' )
             }
         });
     }
@@ -189,7 +193,7 @@ class RegisterWindow {
             },
             error: ( error ) => {
                 console.log( error );
-                alert( 'Erro' )
+                errorAlert( 'Falha ao editar registro', 'Não foi possével editar as informações do elemento.' )
             }
         });
     }
