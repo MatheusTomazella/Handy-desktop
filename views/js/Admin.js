@@ -47,4 +47,19 @@ class Admin {
             if ( element ) element.innerText = values[i];
         }
     }
+    confirmPassword ( password ) {
+        let confirmation;
+        $.ajax({
+            type: "POST",
+            url: `${APIurl}/login`,
+            data: { email: admin.admin.email, password: password, type: 'admin' },
+            success: function (response) {
+                admin.passwordConfirmation = true;
+            },
+            error: ( error ) => {
+                console.log( error );
+                admin.passwordConfirmation = false;
+            }
+        });
+    }
 }

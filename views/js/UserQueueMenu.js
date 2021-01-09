@@ -27,4 +27,21 @@ class UserQueueMenu {
         this.hide();
         ipcRenderer.send( 'newChat', this.user );
     }
+    viewUser ( ) {
+        this.hide();
+        openManager( 'user', 'user', 'Usuário', { key: 'id', value: this.user.id } );
+    }
+    update ( ) {
+        this.hide();
+        ipcRenderer.send( 'newRegister', 
+        {   type: managerWindow.type, 
+            isEdit: true, 
+            title: managerWindow.title, 
+            element: this.user 
+        } );
+    }
+    async delete ( ) {
+        this.hide();
+        managerWindow.deleteRequest( managerWindow.route, this.user );
+    }
 }

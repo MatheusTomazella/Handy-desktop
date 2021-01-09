@@ -11,7 +11,10 @@ class RegisterWindow {
 
     constructor ( args ) {
         this.type = args.type;
-        document.getElementById( 'register-title' ).innerText = `Registrar ${args.title}`;
+        this.isEdit = args.isEdit;
+        this.element = args.element;
+        this.defaultFunction = ( this.isEdit ) ? 'update' : 'register';
+        document.getElementById( 'register-title' ).innerText = `${(this.isEdit) ? 'Editar' : 'Registrar'} ${args.title}`;
 
         this.name           = document.getElementById( 'name' );
         this.email          = document.getElementById( 'email' );
@@ -26,27 +29,47 @@ class RegisterWindow {
         this.clearWindow( );
         const waitingToken = setInterval( ( ) => {
             if ( admin.token ) { 
-                this[ `load_${this.type}` ]( );
+                this[ `load_${this.type}` ]( this.isEdit );
                 clearInterval( waitingToken );
             }
         }, 500 );
         return this;
     }
-    registerDefault ( ) {
-        this[ `register_${this.type}` ]( );
+    default ( ) {
+        this[ `${this.defaultFunction}_${this.type}` ]( );
     }
 
-    load_user ( ) {
-        this.show( [ this.name, this.email, this.password, this.password_conf ] );
+    load_user ( isEdit ) {
+        this.show( [ this.name, this.email, this.password, this.password_conf ],
+            ( isEdit ) ? {
+                name: this.element.name,
+                email: this.element.email,
+                password: 'Nova Senha'
+            } : { } );
     }
-    load_admin ( ) {
-        this.show( [ this.name, this.email, this.password, this.password_conf, this.access ] );
+    load_admin ( isEdit ) {
+        this.show( [ this.name, this.email, this.password, this.password_conf, this.access ],
+            ( isEdit ) ? {
+                name: this.element.name,
+                email: this.element.email,
+                access: this.element.accessLevel,
+                password: 'Nova Senha'
+            } : { } );
     }
-    load_component ( ) {
-        this.show( [ this.name, this.description ] );
+    load_component ( isEdit ) {
+        this.show( [ this.name, this.description ],
+            ( isEdit ) ? {
+                name: this.element.name,
+                description: this.element.descr
+            } : { } );
     }
-    load_provider ( ) {
-        this.show( [ this.name, this.component, this.cost, this.link ] );
+    load_provider ( isEdit ) {
+        this.show( [ this.name, this.component, this.cost, this.link ],
+            ( isEdit ) ? {
+                name: this.element.name,
+                cost: this.element.cost, 
+                link: this.element.link
+            } : { } );
         $.ajax({
             type: "GET",
             url: `${APIurl}/comp?token=${admin.token}`,
@@ -55,6 +78,7 @@ class RegisterWindow {
                     const option = document.createElement( 'option' );
                     option.text = component.name;
                     option.value = component.id;
+                    if ( this.isEdit && option.value == this.element.idComp ) option.selected = true;
                     this.component.appendChild( option );
                 } )
             }
@@ -94,17 +118,36 @@ class RegisterWindow {
         } )
     }
 
+    update_user ( ) {
+        const updatePayload = this.getUpdatePayload( [ 'name', 'email', 'password' ] );
+        if ( updatePayload ) this.updateRequest( 'user', updatePayload, { id: this.element.id } );
+    }
+    update_admin ( ) {
+        const updatePayload = this.getUpdatePayload( [ 'name', 'email', 'password', 'access' ] );
+        if ( updatePayload ) this.updateRequest( 'admin', updatePayload, { id: this.element.id } );
+    }
+    update_component ( ) {
+        const updatePayload = this.getUpdatePayload( [ 'name', 'description' ] );
+        if ( updatePayload ) this.updateRequest( 'comp', updatePayload, { id: this.element.id } );
+    }
+    update_provider ( ) {
+        const updatePayload = this.getUpdatePayload( [ 'name', 'component', 'link', 'cost' ] );
+        if ( updatePayload ) this.updateRequest( 'comp/prov', updatePayload, { id: this.element.id } );
+    }
+
     clearWindow ( ) {
         const children = document.getElementById( 'register' ).children
         for ( let i = 0; i < children.length; i++ ) {
             children[i].style.display = 'none';
         }
     }
-    show ( inputs = [ ] ) {
+    show ( inputs = [ ], placeholders ) {
         inputs.forEach( input => {
             input.style.display = 'block';
+            if ( placeholders[ input.id ] ) input.placeholder = placeholders[ input.id ];
         } )
         document.getElementById( 'btn-register' ).style.display = 'block';
+        if ( this.isEdit ) document.getElementById( 'btn-register' ).innerText = 'Editar';
     }
     clearInputs ( ) {
         const allInputs = [ this.name, this.email, this.password, this.password_conf, this.access, this.cost, this.link, this.description ];
@@ -127,12 +170,44 @@ class RegisterWindow {
             url: `${APIurl}/${route}`,
             data: payload,
             success: ( response ) => {
-                this.clearInputs( );
+                if ( response ) window.close( );
             },
             error: ( error ) => {
                 console.log( error );
-                alert( error.errorCode );
+                alert( 'Erro' );
             }
         });
+    }
+    updateRequest ( route, update, identifier ) {
+        $.ajax({
+            type: "PUT",
+            url: `${APIurl}/${route}`,
+            data: JSON.stringify( { identifier, update, token: admin.token } ),
+            contentType: "application/json",
+            success: function (response) {
+                if ( response ) window.close( );
+            },
+            error: ( error ) => {
+                console.log( error );
+                alert( 'Erro' )
+            }
+        });
+    }
+    getUpdatePayload ( fields = [ ] ) {
+        const convertion = {
+            access: 'accessLevel',
+            description: 'descr',
+            component: 'idComp'
+        };
+        const payload = { };
+        fields.forEach( field => {
+            if ( field === 'password' && !this.passwordIsEqual( ) ) return undefined;
+            let value;
+            if ( field === 'component' ) value = this.component.options[ this.component.selectedIndex ].value;
+            else value = this[ field ].value;
+            if ( value !== undefined && value.trim() !== '' ) 
+                payload[ ( convertion[field] ) ? convertion[field] : field ] = value;
+        } )
+        return payload;
     }
 }
